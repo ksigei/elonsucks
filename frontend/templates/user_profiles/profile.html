@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}View Profile{% endblock %}
+
+{% block content %}
+<div class="card mt-5">
+    <div class="card-header">
+        Profile Information
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Username: {{ user_profile.user.username }}</h5>
+        <p class="card-text">Bio: {{ user_profile.bio }}</p>
+        {% if user_profile.profile_picture %}
+        <img src="{{ user_profile.profile_picture.url }}" class="img-fluid rounded" alt="Profile Picture">
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

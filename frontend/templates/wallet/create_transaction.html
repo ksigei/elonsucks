@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Transaction - Blockchain Demo{% endblock %}
+
+{% block content %}
+    <h1>Create Transaction</h1>
+    <form action="{% url 'create_transaction' %}" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="sender_id" class="form-label">Sender ID:</label>
+            <input type="text" id="sender_id" name="sender_id" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="recipient_id" class="form-label">Recipient ID:</label>
+            <input type="text" id="recipient_id" name="recipient_id" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount:</label>
+            <input type="text" id="amount" name="amount" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Create Transaction</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,14 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Blockchain - My Blockchain App{% endblock %}
+
+{% block content %}
+    <h1 class="mt-5">Blockchain</h1>
+    <ul class="list-group mt-3">
+        {% for block in blockchain %}
+            <li class="list-group-item">Block ID: {{ block.id }}</li>
+            <!-- Add more details about each block as needed -->
+        {% endfor %}
+    </ul>
+{% endblock %}

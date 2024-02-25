@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - ES{% endblock %}
+
+{% block content %}
+    <h1>Welcome to ES</h1>
+    <h2>Actions</h2>
+    <ul>
+        <li><a href="{% url 'create_transaction' %}" class="btn btn-primary">Create Transaction</a></li>
+        <li><a href="{% url 'mine_block' %}" class="btn btn-primary">Mine Block</a></li>
+        <li><a href="{% url 'chain' %}" class="btn btn-primary">View Chain</a></li>
+    </ul>
+{% endblock %}

@@ -18,7 +18,7 @@ def create_forum_post(request):
             post.save()
             for picture in request.FILES.getlist('pictures'):
                 ForumPicture.objects.create(forum_post=post, picture=picture)
-            return redirect('forum_home')  # Redirect to the forum homepage
+            return redirect('forum_post_list')  # Redirect to the forum homepage
     else:
         post_form = ForumPostForm()
         picture_form = ForumPictureForm()
@@ -51,6 +51,6 @@ def delete_forum_post(request, pk):
     post = get_object_or_404(ForumPost, pk=pk)
     if request.method == 'POST':
         post.delete()
-        return redirect('forum_home')  # Redirect to the forum homepage
+        return redirect('forum_post_list')  # Redirect to the forum homepage
     return render(request, 'forum/delete_forum_post.html', {'post': post})
 

@@ -1,0 +1,14 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Mined Block - My Blockchain App{% endblock %}
+
+{% block content %}
+    <h1 class="mt-5">Mined Block</h1>
+    <div class="card mt-3">
+        <div class="card-body">
+            <p class="card-text">Block ID: {{ block.id }}</p>
+            <!-- Add more details about the block as needed -->
+        </div>
+    </div>
+{% endblock %}

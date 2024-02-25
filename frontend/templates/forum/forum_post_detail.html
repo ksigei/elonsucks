@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Forum Post Detail{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Forum Post Detail</h2>
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.content }}</p>
+            {% if post.pictures.all %}
+            <h6>Attached Pictures:</h6>
+            <div class="row">
+                {% for picture in post.pictures.all %}
+                <div class="col-md-4 mb-3">
+                    <img src="{{ picture.picture.url }}" class="img-fluid" alt="Post Picture">
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

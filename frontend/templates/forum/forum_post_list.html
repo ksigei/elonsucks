@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Forum Post List{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Forum Post List</h2>
+    <ul class="list-group mt-3">
+        {% for post in posts %}
+        <li class="list-group-item"><a href="{% url 'forum_post_detail' post.pk %}">{{ post.title }}</a></li>
+        {% empty %}
+        <li class="list-group-item">No posts available.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

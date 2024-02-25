@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Support Ticket Detail{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Support Ticket Detail</h2>
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ ticket.subject }}</h5>
+            <p class="card-text">{{ ticket.description }}</p>
+            {% if ticket.pictures.all %}
+            <h6>Attached Pictures:</h6>
+            <div class="row">
+                {% for picture in ticket.pictures.all %}
+                <div class="col-md-4 mb-3">
+                    <img src="{{ picture.picture.url }}" class="img-fluid" alt="Ticket Picture">
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

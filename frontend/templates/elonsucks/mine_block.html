@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mine Block</title>
+</head>
+<body>
+
+<div id="mining-progress">
+    <h2>Mining Progress</h2>
+    <p id="progress-text">Mining not started.</p>
+    <progress id="mining-progress-bar" max="100" value="0"></progress>
+    <button id="start-mining">Start Mining</button>
+    <button id="stop-mining" disabled>Stop Mining</button>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'blockchain/js/mining.js' %}"></script>
+</body>
+</html>

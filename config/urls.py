@@ -7,6 +7,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('forum/', include('forum.urls')),
     path('support/', include('support.urls')),
+    path('userprofile/', include('userprofile.urls')),
+    path('', include('elonsucks.urls')),
 ]
 
 # Add static and media URL patterns
