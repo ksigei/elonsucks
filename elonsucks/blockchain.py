@@ -1,14 +1,15 @@
+# blockchain.py
 import hashlib
 import json
 import time
-from .models import Block, Transaction
 
 class Blockchain:
     def __init__(self):
+        self.chain = []
         self.current_transactions = []
 
         # Create the genesis block if the blockchain is empty
-        if not Block.objects.exists():
+        if not self.chain:
             self.new_block(previous_hash='1', proof=100)
 
     def new_block(self, proof, previous_hash=None):
@@ -16,43 +17,56 @@ class Blockchain:
         Create a new Block in the Blockchain
         :param proof: <int> The proof given by the Proof of Work algorithm
         :param previous_hash: (Optional) <str> Hash of previous Block
-        :return: <Block> New Block object
+        :return: <dict> New Block
         """
-        block = Block.objects.create(proof=proof, previous_block_hash=previous_hash)
+        block = {
+            'index': len(self.chain) + 1,
+            'timestamp': time.time(),
+            'transactions': self.current_transactions,
+            'proof': proof,
+            'previous_hash': previous_hash or self.hash(self.chain[-1]),
+        }
+
+        # Reset the current list of transactions
+        self.current_transactions = []
+
+        self.chain.append(block)
         return block
 
     def new_transaction(self, sender, recipient, amount):
         """
         Creates a new transaction to go into the next mined Block
-        :param sender: <str> Address of the Sender (public key)
-        :param recipient: <str> Address of the Recipient (public key)
-        :param amount: <decimal> Amount
-        :return: <Transaction> The newly created Transaction object
+        :param sender: <str> Address of the Sender
+        :param recipient: <str> Address of the Recipient
+        :param amount: <int> Amount
+        :return: <int> The index of the Block that will hold this transaction
         """
-        transaction = Transaction.objects.create(sender_wallet_id=sender, recipient_wallet_id=recipient, amount=amount, transaction_type='TRANSFER')
-        return transaction
+        self.current_transactions.append({
+            'sender': sender,
+            'recipient': recipient,
+            'amount': amount,
+        })
+        return self.last_block['index'] + 1
 
     @staticmethod
-    def hash_block(block):
+    def hash(block):
         """
         Creates a SHA-256 hash of a Block
-        :param block: <Block> Block object
-        :return: <str> Hash of the block
+        :param block: <dict> Block
+        :return: <str>
         """
-        block_data = {
-            'index': block.id,
-            'timestamp': block.timestamp.timestamp(),
-            'transactions': [transaction.id for transaction in block.transactions.all()],
-            'proof': block.proof,
-            'previous_hash': block.previous_block_hash,
-        }
-        block_string = json.dumps(block_data, sort_keys=True).encode()
+        # We must make sure that the Dictionary is Ordered, or we'll have inconsistent hashes
+        block_string = json.dumps(block, sort_keys=True).encode()
         return hashlib.sha256(block_string).hexdigest()
 
     @property
     def last_block(self):
+        return self.chain[-1]
+
+    def hash_block(self, block):
         """
-        Returns the last block in the blockchain
-        :return: <Block> Last Block object
+        Hashes a block
+        :param block: <dict> Block
+        :return: <str> Hash of the block
         """
-        return Block.objects.last()
+        return self.hash(block)
